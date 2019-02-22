@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="columns col-10 col-mx-auto">
+    <div class="column col-12 col-xs-12" id="content">
+        <div class="panel" style="height:600px;">
+            <div class="panel-header text-center">
+            </div>
+
+            <div class="panel-body" style="overflow:auto;">
+
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input class="form-input" type="text" placeholder="Hello">
+                    <button class="btn btn-primary input-group-btn" id="post">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{url_for('static', filename='js/room.js')}}"></script>
+
+{% endblock%}

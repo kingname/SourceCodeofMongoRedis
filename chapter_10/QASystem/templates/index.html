@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="column col-10 col-mx-auto" style="padding-top: 100px">
+    {% for question in question_list %}
+    <div class="card" style="margin-top: 15px">
+        <div class="card-body">
+            <div class="column col-10 col-xs-10">
+                <div class="tile">
+                    <div class="tile-icon">
+                        <figure class="avatar avatar-lg"><img src="{{url_for('static', filename='img/avatar.png')}}"
+                                                              alt="Avatar"></figure>
+                    </div>
+                    <div class="tile-content">
+                        <p class="tile-title">{{question.author}}</p>
+                        <p class="tile-subtitle text-gray"><a href="/question/{{question.question_id}}">{{question.title}}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary" doc_type="question" doc_id="{{question.question_id}}" name="vote" direction="vote_up"><i class="icon icon-arrow-up"></i>赞同{{question.vote_up}}</button>
+            <button class="btn btn-action btn-primary circle" doc_type="question" doc_id="{{question.question_id}}" name="vote" direction="vote_down"><i class="icon icon-arrow-down"></i></button>
+            <button class="btn btn-link"><a href="/question/{{question.question_id}}">回答({{question.answer_number}})</a></button>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}

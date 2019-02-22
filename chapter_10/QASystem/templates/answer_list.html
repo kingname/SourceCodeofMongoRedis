@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="column col-12 col-mx-auto" style="padding-top: 100px">
+    <div id="question_detail">
+        <div class="card">
+            <div class="card-body">
+                <div class="tile">
+                    <div class="tile-icon">
+                        <figure class="avatar avatar-lg"><img src="{{url_for('static', filename='img/avatar.png')}}" alt="Avatar"></figure>
+                    </div>
+                    <div class="tile-content">
+                        <p class="tile-title">{{question_answer_dict.question_title}}</p>
+                        <p class="tile-subtitle text-gray">{{question_answer_dict.question_detail}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" id="open-answer-modal">回答问题</button>
+            </div>
+        </div>
+    </div>
+    <div class="divider text-center bg-gray" data-content="{{question_answer_dict.answer_num}}个回答"></div>
+    <div id="answer_list" class="column col-10 col-mx-auto">
+        {% for answer in question_answer_dict.answer_list %}
+        <div class="card" style="margin-top: 15px">
+            <div class="card-body">
+                <div class="column col-10 col-xs-10">
+                    <div class="tile">
+                        <div class="tile-icon">
+                            <figure class="avatar avatar-lg"><img src="{{url_for('static', filename='img/avatar.png')}}" alt="Avatar"></figure>
+                        </div>
+                        <div class="tile-content">
+                            <p class="tile-title">{{answer.answer_author}}</p>
+                            <p class="tile-subtitle text-gray">{{answer.answer_detail}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" doc_type="answer" direction="vote_up" doc_id="{{answer.answer_id}}" name="vote"><i class="icon icon-arrow-up" ></i>赞同{{answer.answer_vote}}</button>
+                <button class="btn btn-action btn-primary circle" doc_type="answer" direction="vote_down" doc_id="{{answer.answer_id}}" name="vote"><i class="icon icon-arrow-down"></i></button>
+            </div>
+        </div>
+        {% endfor %}
+        <script> var question_id="{{question_answer_dict.question_id}}"</script>
+    <div class="modal" id="answer-question-modal">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+            <div class="modal-header">
+                <a class="btn btn-clear float-right" aria-label="Close" id="close-answer-modal"></a>
+                <div class="modal-title h5">回答问题</div>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <textarea class="form-input" id="answer" placeholder="写下你的答案" rows="8" style="margin-top: 15px"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="post-answer">发布回答</button><a class="btn btn-link" href="#modals-sizes" aria-label="Close" id="cancel-answer-modal">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

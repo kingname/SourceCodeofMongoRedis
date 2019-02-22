@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="column col-12 col-mx-auto" style="padding-top: 100px">
+    <div id="question_detail">
+        <div class="card">
+            <div class="card-body">
+                <div class="tile">
+                    <div class="tile-icon">
+                        <figure class="avatar avatar-lg"><img src="{{url_for('static', filename='img/avatar.png')}}"
+                                                              alt="Avatar"></figure>
+                    </div>
+                    <div class="tile-content">
+                        <p class="tile-title" id="question_title">{{question_answer_dict.question_title}}</p>
+                        <p class="tile-subtitle text-gray" id="question_text" doc_id="{{question_answer_dict.question_id}}">
+                            {% for line in question_answer_dict.question_detail %}
+                        <p class="tile-subtitle text-gray" name="my-question" value="{{line}}">{{line}}</p>
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                {% if session.could_answer_this_question %}
+                <button class="btn btn-primary" id="open-answer-modal">回答问题</button>
+                {% else %}
+                <button class="btn btn-primary disabled" id="open-answer-modal">回答问题</button>
+                {% endif %}
+                {% if session.user == question_answer_dict.question_author %}
+                <button class="btn btn-primary" doc_id="{{question_answer_dict.question_id}}" name="change_question">
+                    修改问题
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="divider text-center bg-gray" data-content="{{question_answer_dict.answer_num}}个回答"></div>
+    <div id="answer_list" class="column col-10 col-mx-auto">
+        {% for answer in question_answer_dict.answer_list %}
+        <div class="card" style="margin-top: 15px">
+            <div class="card-body">
+                <div class="column col-10 col-xs-10">
+                    <div class="tile">
+                        <div class="tile-icon">
+                            <figure class="avatar avatar-lg"><img src="{{url_for('static', filename='img/avatar.png')}}"
+                                                                  alt="Avatar"></figure>
+                        </div>
+                        <div class="tile-content">
+                            <p class="tile-title">{{answer.answer_author}}</p>
+                            {% if answer.answer_author == session.user %}
+                                <p class="tile-subtitle text-gray" name="my-answer-div" doc_id="{{ answer.answer_id }}">
+                            {% else %}
+                                <p class="tile-subtitle text-gray" doc_id="{{ answer.answer_id }}">
+                            {% endif %}
+                                {% for line in answer.answer_detail %}
+                            {% if answer.answer_author == session.user %}
+                                <p class="tile-subtitle text-gray" name="my-answer" value="{{line}}">
+                            {% else %}
+                                <p class="tile-subtitle text-gray" value="{{line}}">
+                            {% endif %}
+                                {{line}}
+                            </p>
+                            {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                {% if session.user %}
+                <button class="btn btn-primary" doc_type="answer" direction="vote_up" doc_id="{{answer.answer_id}}"
+                        name="vote"><i class="icon icon-arrow-up"></i>赞同{{answer.answer_vote}}
+                </button>
+                <button class="btn btn-action btn-primary circle" doc_type="answer" direction="vote_down"
+                        doc_id="{{answer.answer_id}}" name="vote"><i class="icon icon-arrow-down"></i></button>
+                {% else %}
+                <button class="btn btn-primary disabled" doc_type="answer" direction="vote_up" doc_id="{{answer.answer_id}}"
+                        name="vote"><i class="icon icon-arrow-up"></i>赞同{{answer.answer_vote}}
+                </button>
+                <button class="btn btn-action btn-primary circle disabled" doc_type="answer" direction="vote_down"
+                        doc_id="{{answer.answer_id}}" name="vote"><i class="icon icon-arrow-down"></i></button>
+                {% endif %}
+                {% if session.user == answer.answer_author%}
+                <button class="btn btn-primary" doc_id="{{answer.answer_id}}" name="change_answer">修改回答</button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="column col-md-4 col-mx-auto">
+        <ul class="pagination">
+            {% if current_page > 1 %}
+            <li class="page-item">
+                {% else %}
+            <li class="page-item disabled">
+                {% endif %}
+                <a href="/question/{{ question_answer_dict.question_id }}/page/{{current_page - 1}}" tabindex="-1">上一页</a>
+            </li>
+            {% for page in page_list %}
+            {% if page + 1 == current_page %}
+            <li class="page-item disabled">
+                <a href="/question/{{ question_answer_dict.question_id }}/page/{{ page + 1 }}">{{ page + 1 }}</a>
+                {% else %}
+            <li class="page-item">
+                <a href="/question/{{ question_answer_dict.question_id }}/page/{{ page + 1 }}">{{page + 1}}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% if current_page >= page_list[-1] + 1%}
+            <li class="page-item disabled">
+                {% else %}
+            <li class="page-item">
+                {% endif %}
+                <a href="/question/{{ question_answer_dict.question_id }}/page/{{current_page + 1}}">下一页</a>
+            </li>
+        </ul>
+    </div>
+
+        <script> var question_id = "{{question_answer_dict.question_id}}"</script>
+        <div class="modal" id="answer-question-modal">
+            <a href="#close" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <a class="btn btn-clear float-right" aria-label="Close" id="close-answer-modal"></a>
+                    <div class="modal-title h5">回答问题</div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <textarea class="form-input" id="answer" placeholder="写下你的答案" rows="8"
+                                  style="margin-top: 15px"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="post-answer">发布回答</button>
+                    <a class="btn btn-link" href="#modals-sizes" aria-label="Close" id="cancel-answer-modal">取消</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="update-answer-modal">
+            <a href="#close" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <a class="btn btn-clear float-right" aria-label="Close" id="close-update-answer-modal"></a>
+                    <div class="modal-title h5">修改回答</div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <textarea class="form-input" id="update-answer" placeholder="写下你的答案" rows="8"
+                                  style="margin-top: 15px"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="post-update-answer">修改回答</button>
+                    <a class="btn btn-link" href="#modals-sizes" aria-label="Close"
+                       id="cancel-update-answer-modal">取消</a>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="update-question-modal">
+            <a href="#" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <a href="#close" class="btn btn-clear float-right" aria-label="Close" id="close-update-question-modal"></a>
+                    <div class="modal-title h5">更新问题</div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <input class="form-input" type="text" id="update_question_title" placeholder="写下你的问题">
+                        <textarea class="form-input" id="update_question_detail" placeholder="详细描述你的问题" rows="8"
+                                  style="margin-top: 15px"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="post-update-question">更新</button>
+                    <a class="btn btn-link" href="#modals-sizes" aria-label="Close" id="cancel-update-question">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

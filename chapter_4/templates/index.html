@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人员管理系统</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spectre.min.css')}}">
+    <script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="columns">
+        <div class="column col-8 col-mx-auto">
+            <header class="navbar">
+                <section class="centered">
+                    <div class="navbar-brand mr-2"><h2>人员管理系统</h2></div>
+                </section>
+            </header>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="col-10 col-mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-12">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>工号</th>
+                                <th>姓名</th>
+                                <th>年龄</th>
+                                <th>出生日期</th>
+                                <th>户籍地址</th>
+                                <th>当前住址</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for data in data_list %}
+                            <tr>
+                                <td class="id" rowindex="{{data['id']}}">{{data['id']}}</td>
+                                <td class="name" rowindex="{{data['id']}}">{{data.name}}</td>
+                                <td class="age" rowindex="{{data['id']}}">{{data.age}}</td>
+                                <td class="birthday" rowindex="{{data['id']}}">{{data.birthday}}</td>
+                                <td class="origin-home" rowindex="{{data['id']}}">{{data.origin_home}}</td>
+                                <td class="current-home" rowindex="{{data['id']}}">{{data.current_home}}</td>
+                                <td>
+                                    <button class="btn btn-success" name="edit_this_info" rowindex="{{data['id']}}">编辑
+                                    </button>
+                                    <button class="btn btn-error" name="delete_this_info" rowindex="{{data['id']}}">删除
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12" style="margin-top: 15px">
+                        <button class="btn btn-success centered" id="open_add_modal">添加人员</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modal_edit_info">
+                <a href="#close" class="modal-overlay" aria-label="Close"></a>
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <div id="close_edit_modal" class="btn btn-clear float-right" aria-label="Close"></div>
+                        <div class="modal-title h5">编辑信息</div>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="modal-body">
+                            <div class="content">
+                                <fieldset disabled>
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="edit-name">工号</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input class="form-input" type="text" id="edit-id">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="edit-name">姓名</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input class="form-input" type="text" id="edit-name" placeholder="姓名">
+                                    </div>
+                                </div>
+                                <fieldset disabled>
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="edit-age">年龄</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input class="form-input" type="text" id="edit-age" placeholder="年龄：根据生日自动计算">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="edit-birthday">出生日期</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input class="form-input" type="text" id="edit-birthday" placeholder="出生日期">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="edit-origin-home">户籍地址</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input class="form-input" type="text" id="edit-origin-home" placeholder="户籍地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="edit-current-home">当前住址</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input class="form-input" type="text" id="edit-current-home"
+                                               placeholder="当前住址">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success centered" id="update_info">更新</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modal_add_info">
+                <a href="#close" class="modal-overlay" aria-label="Close"></a>
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <div id="close_add_modal" class="btn btn-clear float-right" aria-label="Close"></div>
+                        <div class="modal-title h5">添加信息</div>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="modal-body">
+                            <div class="content">
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="input-name">姓名</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input name="name" class="form-input" type="text" id="input-name"
+                                               placeholder="姓名">
+                                    </div>
+                                </div>
+                                <fieldset disabled>
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="input-age">年龄</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input name="age" class="form-input" type="text" id="input-age"
+                                                   placeholder="年龄:根据生日自动计算">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="input-birthday">出生日期</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input name="birthday" class="form-input" type="text" id="input-birthday"
+                                               placeholder="出生日期">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="input-origin-home">户籍地址</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input name="origin_home" class="form-input" type="text" id="input-origin-home"
+                                               placeholder="户籍地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-3 col-sm-12">
+                                        <label class="form-label" for="input-current-home">当前住址</label>
+                                    </div>
+                                    <div class="col-9 col-sm-12">
+                                        <input name="current_home" class="form-input" type="text"
+                                               id="input-current-home"
+                                               placeholder="当前住址">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success centered" id="add_info">添加</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{url_for('static', filename='js/operation.js')}}"></script>
+</body>
+</html>

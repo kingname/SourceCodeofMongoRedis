@@ -1,0 +1,28 @@
+.
+├── Pipfile
+├── Pipfile.lock
+├── answer
+│   ├── MongoUtil.py
+│   └── __init__.py
+├── generate_answer.py
+├── generate_question.py
+├── main.py
+├── static
+│   ├── css
+│   │   ├── spectre-icons.css
+│   │   └── spectre.min.css
+│   ├── img
+│   │   └── avatar.png
+│   └── js
+│       ├── jquery-3.3.1.min.js
+│       └── post_question_and_answer.js
+├── templates
+│   ├── answer_list.html
+│   ├── base.html
+│   └── index.html
+├── util
+│   ├── __init__.py
+│   └── utils.py
+└── your_code_here
+    ├── MongoUtil.py
+    └── __init__.py

@@ -1,0 +1,14 @@
+[[source]]
+
+url = "https://pypi.douban.com/simple/"
+verify_ssl = true
+name = "douban"
+
+
+[packages]
+
+pymongo = "*"
+
+
+[dev-packages]
+

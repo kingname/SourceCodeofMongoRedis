@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简易聊天室</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spectre.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spectre-icons.css')}}">
+    <script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/js.cookie.js')}}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="columns">
+        <div class="column col-8 col-mx-auto">
+            <header class="navbar">
+                <section class="centered">
+                    <div class="navbar-brand mr-2"><h2>简易聊天室</h2></div>
+                </section>
+            </header>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

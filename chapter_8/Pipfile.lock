@@ -1,0 +1,36 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "0b0e48ee20edcc8f6989bdb1a06b72e451db6fbdb40408800a23d8a9bef3b94c"
+        },
+        "host-environment-markers": {
+            "implementation_name": "cpython",
+            "implementation_version": "3.6.5",
+            "os_name": "posix",
+            "platform_machine": "x86_64",
+            "platform_python_implementation": "CPython",
+            "platform_release": "17.7.0",
+            "platform_system": "Darwin",
+            "platform_version": "Darwin Kernel Version 17.7.0: Thu Jun 21 22:53:14 PDT 2018; root:xnu-4570.71.2~1/RELEASE_X86_64",
+            "python_full_version": "3.6.5",
+            "python_version": "3.6",
+            "sys_platform": "darwin"
+        },
+        "pipfile-spec": 6,
+        "requires": {},
+        "sources": [
+            {
+                "name": "douban",
+                "url": "https://pypi.douban.com/simple/",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "pymongo": {
+            "hashes": [],
+            "version": "==3.7.1"
+        }
+    },
+    "develop": {}
+}

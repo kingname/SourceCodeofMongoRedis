@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="column col-12">
+    <div class="empty">
+        <div class="row">
+            <div class="empty-icon"><i class="icon icon-3x icon-people"></i></div>
+            <p class="empty-title h5">登录</p>
+            <p class="empty-subtitle">在下面输入任何你想作为昵称的字符</p>
+            <div class="empty-action input-group input-inline">
+                <input class="form-input" type="text" id="nick" placeholder="青南">
+                <button class="btn btn-primary input-group-btn" id="login">登录</button>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
+
+</div>
+<script src="{{url_for('static', filename='js/login.js')}}"></script>
+{% endblock %}

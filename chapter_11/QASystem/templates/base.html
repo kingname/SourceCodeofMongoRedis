@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问答系统</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spectre.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spectre-icons.css')}}">
+    <script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+</head>
+<body>
+<div class="container bg-gray">
+    <div class="columns">
+        <div class="column col-12 bg-dark" style="position: fixed; z-index:100;">
+            <ul class="pagination">
+                <li class="page-item page-prev">
+                    <a href="/">
+                        <div class="text-light h3">问答系统</div>
+                    </a>
+                </li>
+                {% if session.user %}
+                <li class="page-item page-next">
+                    <div class="text-light h5">
+                        <button class="btn btn-success" id="ask">提问<i class="icon icon-edit"></i></button>
+                        <button class="btn btn-success">{{ session.user }}</button>
+                    </div>
+                </li>
+                {% else %}
+                <li class="page-item page-next">
+                    <div class="text-light h5" id="login_or_register">
+                        <button class="btn btn-success">登录/注册</button>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+</div>
+<div class="modal" id="ask-question-modal">
+    <a href="#" class="modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+        <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" aria-label="Close" id="close-question-modal"></a>
+            <div class="modal-title h5">提问</div>
+        </div>
+        <div class="modal-body">
+            <div class="content">
+                <input class="form-input" type="text" id="create_question_title" placeholder="写下你的问题">
+                <textarea class="form-input" id="create_question_detail" placeholder="详细描述你的问题" rows="8"
+                          style="margin-top: 15px"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="post-question">发布问题</button>
+            <a class="btn btn-link" href="#modals-sizes" aria-label="Close" id="cancel-question">取消</a>
+        </div>
+    </div>
+</div>
+<script src="{{url_for('static', filename='js/login.js')}}"></script>
+<script src="{{url_for('static', filename='js/post_question_and_answer.js')}}"></script>
+</body>
+</html>
