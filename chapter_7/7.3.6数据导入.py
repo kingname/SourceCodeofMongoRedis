@@ -1,6 +1,8 @@
 import pymongo
 
-handler = pymongo.MongoClient().chapter_7.example_post
+db = pymongo.MongoClient().chapter_7
+post = db.example_post
+user = db.user
 
 weibo = [
     {'user_id': 1002, 'content': '考试完了，好无聊啊啊', 'post_time': '2018-06-11 12:23:12'},
@@ -18,4 +20,52 @@ weibo = [
     {'user_id': 1001, 'content': '青山不改绿水长流，同学们后会有期', 'post_time': '2018-06-15 23:23:12'},
     {'user_id': 1003, 'content': '今天收到了小费。谢谢大老板。', 'post_time': '2018-06-15 23:23:12'},
          ]
-handler.insert_many(weibo)
+post.insert_many(weibo)
+
+user_info = [{'age': 17,
+  'id': 1001,
+  'name': '王小一',
+  'register_date': '2018-06-09',
+  'work': '学生'},
+ {'age': 18,
+  'id': 1002,
+  'name': '张小二',
+  'register_date': '2018-06-09',
+  'work': '学生'},
+ {'age': 19,
+  'id': 1003,
+  'name': '李小三',
+  'register_date': '2018-06-10',
+  'work': '服务员'},
+ {'age': 20,
+  'id': 1004,
+  'name': '郭小四',
+  'register_date': '2018-06-10',
+  'work': '厨师'},
+ {'age': 21,
+  'id': 1005,
+  'name': '毛小五',
+  'register_date': '2018-06-10',
+  'work': '美工'},
+ {'age': 22,
+  'id': 1006,
+  'name': '欧阳小六',
+  'register_date': '2018-06-10',
+  'work': '工程师'},
+ {'age': 23,
+  'id': 1007,
+  'name': '夏侯小七',
+  'register_date': '2018-06-10',
+  'work': '医生'},
+ {'age': 24,
+  'id': 1008,
+  'name': '慕容小八',
+  'register_date': '2018-06-10',
+  'work': '建筑设计师'},
+ {'age': 25,
+  'id': 1009,
+  'name': '南宫小九',
+  'register_date': '2018-06-10',
+  'work': '中介'}]
+user.insert_many(user_info)
+
