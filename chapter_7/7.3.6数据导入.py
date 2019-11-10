@@ -2,7 +2,7 @@ import pymongo
 
 db = pymongo.MongoClient().chapter_7
 post = db.example_post
-user = db.user
+user = db.example_user
 
 weibo = [
     {'user_id': 1002, 'content': '考试完了，好无聊啊啊', 'post_time': '2018-06-11 12:23:12'},
