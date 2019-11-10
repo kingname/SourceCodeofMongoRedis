@@ -75,5 +75,7 @@
 ## 19. 左手MongoDB右手Redis：MongoDB的聚合查询（三）——拆分数组
 [https://www.bilibili.com/video/av71871581](https://www.bilibili.com/video/av71871581)
 
+## 20. 左手MongoDB右手Redis：MongoDB的聚合查询（四）——联集合查询
+[https://www.bilibili.com/video/av75206779](https://www.bilibili.com/video/av75206779)
 持续更新中，每周一期，敬请期待
 
