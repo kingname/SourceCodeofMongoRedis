@@ -77,5 +77,9 @@
 
 ## 20. 左手MongoDB右手Redis：MongoDB的聚合查询（四）——联集合查询
 [https://www.bilibili.com/video/av75206779](https://www.bilibili.com/video/av75206779)
+
+## 21. 左手MongoDB右手Redis：Redis列表实现一次弹出多条数据
+[https://www.bilibili.com/video/av78512923](https://www.bilibili.com/video/av78512923)
 持续更新中，每周一期，敬请期待
+
 
