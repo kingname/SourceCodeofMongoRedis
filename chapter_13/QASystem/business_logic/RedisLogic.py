@@ -114,3 +114,4 @@ class RedisLogic(object):
         """
         redis_key = 'qa_system:answer:{question_id}:vote'.format(question_id=question_id)
         self.redis_util.sorted_set_add(redis_key, answer_id, 0)
+

@@ -1,5 +1,5 @@
 import hashlib
-from model import redis_util
+from business_logic import RedisLogic
 import math
 from struct import unpack, pack
 
@@ -11,7 +11,7 @@ class BloomFilter(object):
             (capacity * abs(math.log(error_rate))) /
             (self.num_slices * (math.log(2) ** 2))))
         self.hashs = self.make_hashfuncs(self.num_slices, self.bits_per_slice)
-        self.redis_util = redis_util
+        self.redis_util = RedisLogic()
 
     def make_hashfuncs(self, num_slices, num_bits):
         """
@@ -69,13 +69,8 @@ class BloomFilter(object):
         offset_list = self.hashs(key)
         self.redis_util.set_bit_value(offset_list)
 
-    def lock(self, key):
-        redis_key = 'qa_system:bloomlock:{}'.format(key)
-        return self.redis_util.set_string_if_not_exists(redis_key, 1)
 
-    def unlock(self, key):
-        redis_key = 'qa_system:bloomlock:{}'.format(key)
-        self.redis_util.delete_key(redis_key)
+
 
 if __name__ == '__main__':
     bloom = BloomFilter(1000000000, 0.0001)

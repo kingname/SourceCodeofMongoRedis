@@ -43,7 +43,7 @@ class RedisUtil(object):
         return False
 
     def increase_sorted_set_score(self, key, target, value) -> bool:
-        self.client.zincrby(key, target, value)
+        self.client.zincrby(key, value, target)
         return True
 
     def get_value_score_tuple_by_rank(self, key, rank_start, offset, withscores=True):
@@ -51,7 +51,7 @@ class RedisUtil(object):
         return doc_id_score_list
 
     def sorted_set_add(self, key, value, score):
-        self.client.zadd(key, value, score)
+        self.client.zadd(key, {value: score})
 
 
 redis_util = RedisUtil()

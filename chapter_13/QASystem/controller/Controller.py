@@ -62,12 +62,9 @@ def register(body):
     password = body.get('password', '')
     if not all([user, password]):
         return json.dumps({'success': False, 'reason': '用户名和密码不能同时为空！'}, ensure_ascii=False)
-    bloom.lock(user)
     if bloom.check_duplicate(user):
-        bloom.unlock(user)
         return json.dumps({'success': False, 'reason': '用户名已被注册！请更换'})
     bloom.set_key(user)
-    bloom.unlock(user)
     password_hash = generate_password_hash(password)
     user_id = mongo_logic.save_user_info(user, password_hash)
     session_id, session_data = generate_session(user_id, user)
