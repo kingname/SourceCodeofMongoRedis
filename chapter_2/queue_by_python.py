@@ -37,5 +37,5 @@ consumer = Consumer(queue)
 
 producer.start()
 consumer.start()
-producer.join()
-consumer.join()
+while True:
+    time.sleep(1)

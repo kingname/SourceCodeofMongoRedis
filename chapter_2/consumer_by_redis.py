@@ -3,7 +3,9 @@ import time
 import redis
 import random
 from threading import Thread
+import re
 
+re.S
 
 class Consumer(Thread):
     def __init__(self):
@@ -20,4 +22,5 @@ class Consumer(Thread):
 
 consumer = Consumer()
 consumer.start()
-consumer.join()
+while True:
+    time.sleep(1)

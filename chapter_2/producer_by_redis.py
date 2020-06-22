@@ -18,7 +18,7 @@ class Producer(Thread):
             self.queue.rpush('producer', json.dumps((a, b)))
             time.sleep(2)
 
-
 producer = Producer()
 producer.start()
-producer.join()
+while True:
+    time.sleep(1)
