@@ -2,7 +2,7 @@ import json
 import datetime
 import hashlib
 import time
-from your_code_here.RedisUtil import RedisUtil
+from answer.RedisUtil import RedisUtil
 from urllib.parse import quote, unquote
 from flask import Flask, render_template, request, redirect
 
@@ -61,7 +61,7 @@ def post_message():
         return json.dumps({'success': False, 'reason': '昵称或聊天内容为空！'}, ensure_ascii=False)
 
     expire_time = redis_util.get_nick_msg_expire_time(nick, msg)
-    if not expire_time:
+    if expire_time < 1:
         message_info = {'msg': message['msg'],
                         'post_time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         'nick': message['nick']}
@@ -72,7 +72,6 @@ def post_message():
         return json.dumps({'success': False,
                            'reason': '在两分钟内不同发送同样的内容！还剩{expire_time}秒'.format(expire_time=expire_time)},
                           ensure_ascii=False)
-
 
 
 
