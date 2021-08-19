@@ -6,7 +6,12 @@ import pymongo
 
 with open('example_data_1.csv', encoding='utf-8') as f:
     reader = csv.DictReader(f)
-    rows = [x for x in reader]
+    rows = []
+    for row in reader:
+        row['age'] = int(row['age'])
+        row['salary'] = int(row['salary'])
+        row['id'] = int(row['id'])
+        rows.append(rows)
 
 handler = pymongo.MongoClient().chapter_7.example_data_1
 handler.insert_many(rows)
