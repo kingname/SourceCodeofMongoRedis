@@ -28,8 +28,8 @@ class DataBaseManager(object):
 
         :return: 最新ID
         """
-        last_info = self.handler.find({}, {'_id': 0, 'id': 1}).sort('id', -1).limit(1)
-        return last_info[0]['id'] if last_info.count() else 0
+        last_info = self.handler.find_one({}, {'_id': 0, 'id': 1}, sort=[('_id', -1)])
+        return last_info['id'] if last_info else 0
 
     def add_info(self, para_dict):
         """
